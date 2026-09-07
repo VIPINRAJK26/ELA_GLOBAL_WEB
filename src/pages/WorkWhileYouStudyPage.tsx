@@ -21,7 +21,11 @@ import {
   Flame,
   ChevronLeft,
   ChevronRight,
-  Check
+  Check,
+  Coins,
+  Euro,
+  Wallet,
+  Clock
 } from 'lucide-react';
 
 const brochureSlides = [
@@ -186,6 +190,35 @@ export default function WorkWhileYouStudyPage() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash.includes('#')) {
+        const parts = hash.split('#').filter(Boolean);
+        const rawTarget = parts[parts.length - 1];
+        if (rawTarget && rawTarget !== 'work-while-you-study-page') {
+          const aliasMap: Record<string, string> = {
+            'overview': 'how-to-join',
+            'growth': 'german-pathway',
+            'roles': 'job-roles',
+            'apply': 'salary-terms',
+            'mini-jobs': 'part-time-and-mini-jobs',
+            'part-time-and-mini-jobs': 'part-time-and-mini-jobs',
+            'cost-of-living': 'student-cost-of-living',
+            'student-cost-of-living': 'student-cost-of-living',
+          };
+          const targetId = aliasMap[rawTarget] || rawTarget;
+          setTimeout(() => {
+            scrollTo(targetId);
+          }, 150);
+        }
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
   const navigateTo = (url: string) => { 
     window.location.hash = url; 
   };
@@ -208,7 +241,7 @@ export default function WorkWhileYouStudyPage() {
       
       {/* ================= 1. COMPACT SUB-NAVIGATION ================= */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 mb-6 shadow-xs transition-all duration-300">
-        <div className="container-max mx-auto px-4 flex justify-center items-center gap-4 sm:gap-8 flex-wrap">
+        <div className="container-max mx-auto px-4 flex justify-center items-center gap-3 sm:gap-6 flex-wrap">
           {[
             { id: 'how-to-join', label: 'How to Join' },
             { id: 'freshers-pathway', label: 'Freshers Career' },
@@ -216,6 +249,8 @@ export default function WorkWhileYouStudyPage() {
             { id: 'job-roles', label: 'Job Categories' },
             { id: 'paid-tracks', label: 'Work Tracks & Toolkits' },
             { id: 'earn-in-germany', label: 'Earn in Germany' },
+            { id: 'part-time-and-mini-jobs', label: 'Part Time & Mini Jobs' },
+            { id: 'student-cost-of-living', label: 'Cost of Living' },
             { id: 'salary-terms', label: 'Stipends & Certification' }
           ].map(tab => {
             const isSelected = activeTab === tab.id;
@@ -670,7 +705,287 @@ export default function WorkWhileYouStudyPage() {
           </div>
         </section>
 
-        {/* ================= 8. GUARANTEED BENEFITS & 1-YEAR EXPERIENCE CERTIFICATE ================= */}
+        {/* ================= 8. PART-TIME & MINI JOBS ================= */}
+        <section id="part-time-and-mini-jobs" className="scroll-mt-28 border-t border-slate-200 pt-14">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <span className="text-xs font-black tracking-widest text-indigo-700 uppercase bg-indigo-50 px-3.5 py-1 rounded-full border border-indigo-200">
+              German Student Work Regulations (140 Full / 280 Half Days)
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-2">Part Time and Mini Jobs in Germany</h2>
+            <p className="text-slate-600 text-sm sm:text-base">
+              Work legally up to 20 hours/week during semester periods and 40 hours/week in semester breaks. Earn €538/mo tax-free or €14–€25/hr in corporate student contracts.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-indigo-500 transition-all group">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 border border-indigo-100 group-hover:scale-105 transition-transform">
+                  <Briefcase className="w-6 h-6" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-black uppercase text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">Career Track</span>
+                  <span className="text-xs font-black text-emerald-600">€15 – €25/hr</span>
+                </div>
+                <h4 className="font-bold text-base text-slate-900 mb-2">Werkstudent (Working Student)</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  Direct employment in German tech firms, engineering hubs, or consultancies. Gain high-value resume credits while studying.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-500">
+                Max 20 hrs/week • Full Pension Credits
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-emerald-500 transition-all group">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 border border-emerald-100 group-hover:scale-105 transition-transform">
+                  <Euro className="w-6 h-6" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">100% Tax Free</span>
+                  <span className="text-xs font-black text-emerald-600">€538/month</span>
+                </div>
+                <h4 className="font-bold text-base text-slate-900 mb-2">Mini-Job (538-Euro Basis)</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  German legal standard for tax-free student side income. Work roughly 10 hrs/week in retail, logistics, cafes, or libraries.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-500">
+                Zero Income Tax • Zero Social Deductions
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-500 transition-all group">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 border border-blue-100 group-hover:scale-105 transition-transform">
+                  <GraduationCap className="w-6 h-6" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-black uppercase text-blue-700 bg-blue-50 px-2 py-0.5 rounded">Campus Job</span>
+                  <span className="text-xs font-black text-emerald-600">€13 – €17/hr</span>
+                </div>
+                <h4 className="font-bold text-base text-slate-900 mb-2">HiWi (Research Assistant)</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  Assist professors in university laboratories, lecture preparation, or library administration. Exceptional academic network.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-500">
+                Exempt from 140-day limitation
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-amber-500 transition-all group">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 border border-amber-100 group-hover:scale-105 transition-transform">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-black uppercase text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Semester Breaks</span>
+                  <span className="text-xs font-black text-emerald-600">€2,000–€3,200/mo</span>
+                </div>
+                <h4 className="font-bold text-base text-slate-900 mb-2">Full-Time Vacation Jobs</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  Work up to 40 hours per week legally during official semester breaks. Save living expenses for the entire upcoming semester.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-500">
+                Full 40 hrs/week • Uncapped Earning
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-3xl bg-indigo-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+            <div className="space-y-1">
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">ILA Global Career Support</span>
+              <h3 className="text-xl font-black">Need verified assistance securing a part-time job or Werkstudent contract?</h3>
+              <p className="text-xs sm:text-sm text-indigo-200 max-w-2xl">
+                We format your German CV (Lebenslauf), prepare motivation letters, and connect you to vetted regional employers across Germany.
+              </p>
+            </div>
+            <button
+              onClick={() => navigateTo('#applications?tab=Work While You Study')}
+              className="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm rounded-xl cursor-pointer shadow-md shrink-0 transition-all"
+            >
+              Get German Job Placement Support →
+            </button>
+          </div>
+        </section>
+
+        {/* ================= 9. STUDENT COST OF LIVING IN GERMANY ================= */}
+        <section id="student-cost-of-living" className="scroll-mt-28 border-t border-slate-200 pt-14">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <span className="text-xs font-black tracking-widest text-emerald-700 uppercase bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200">
+              Realistic Budget & Blocked Account Breakdown (€992/Mo Benchmark)
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-2">Student Cost of Living in Germany</h2>
+            <p className="text-slate-600 text-sm sm:text-base">
+              Germany offers tuition-free public university education. Here is the realistic monthly cost breakdown required to live comfortably as an international student.
+            </p>
+          </div>
+
+          {/* Monthly Budget Breakdown Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    <Home className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900">€320 - €550</span>
+                </div>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">Accommodation (Rent)</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Student dorms (Studentenwohnheim) or shared flat (WG Zimmer) including heating & electricity (Warmmiete).
+                </p>
+              </div>
+              <span className="text-[10px] font-bold text-blue-600 mt-4 block">Largest Expense (~45%)</span>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900">~€125</span>
+                </div>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">Health Insurance</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Statutory German student health insurance (TK, Barmer, AOK). Covers all doctor visits, hospital & prescriptions.
+                </p>
+              </div>
+              <span className="text-[10px] font-bold text-emerald-600 mt-4 block">Mandatory for Visa</span>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                    <Wallet className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900">€180 - €220</span>
+                </div>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">Food & Groceries</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Monthly cooking groceries from discount markets (Aldi, Lidl, Rewe) plus subsidized university Mensa meals.
+                </p>
+              </div>
+              <span className="text-[10px] font-bold text-amber-600 mt-4 block">Mensa meals: €2.50–€4</span>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                    <Globe2 className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900">€35 - €50</span>
+                </div>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">Semester Transit Ticket</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Deutschlandsemesterticket included in university fee. Unlimited local buses, trams, U-Bahn, S-Bahn & regional trains nationwide.
+                </p>
+              </div>
+              <span className="text-[10px] font-bold text-purple-600 mt-4 block">Free Transit Nationwide</span>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
+                    <Coins className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900">€50 - €80</span>
+                </div>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">Mobile, Wi-Fi & Misc</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Unlimited 5G mobile plan, Rundfunkbeitrag TV license (split among flatmates), personal toiletries & recreation.
+                </p>
+              </div>
+              <span className="text-[10px] font-bold text-rose-600 mt-4 block">Total: ~€750 – €950/mo</span>
+            </div>
+          </div>
+
+          {/* City Tier Comparison & Blocked Account Comparison */}
+          <div className="grid lg:grid-cols-12 gap-6 items-stretch">
+            <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                  <h3 className="text-lg font-black text-slate-900">City-Wise Cost Comparison in Germany</h3>
+                  <span className="text-xs font-bold text-brand-600">3 Tiers</span>
+                </div>
+                <div className="space-y-4">
+                  <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Tier 1 • High Cost</span>
+                      <h4 className="font-bold text-sm text-slate-900 mt-1">Munich, Frankfurt, Hamburg, Stuttgart</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Higher rent (€500-€750/mo), but immense concentration of multinational corporate jobs.</p>
+                    </div>
+                    <span className="text-sm sm:text-base font-black text-slate-900 shrink-0 ml-4">€950 – €1,200/mo</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-amber-800 bg-amber-100 px-2 py-0.5 rounded">Tier 2 • Moderate Cost</span>
+                      <h4 className="font-bold text-sm text-slate-900 mt-1">Berlin, Cologne, Düsseldorf, Nuremberg</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Balanced lifestyle with vibrant startup ecosystems, cultural life & student discounts.</p>
+                    </div>
+                    <span className="text-sm sm:text-base font-black text-slate-900 shrink-0 ml-4">€800 – €950/mo</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Tier 3 • Most Affordable</span>
+                      <h4 className="font-bold text-sm text-slate-900 mt-1">Leipzig, Dresden, Aachen, Chemnitz, Ilmenau</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Top-tier TU9 universities with low rents (€280-€400/mo), ideal for smart budgeting.</p>
+                    </div>
+                    <span className="text-sm sm:text-base font-black text-emerald-700 shrink-0 ml-4">€650 – €800/mo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">Financial Safety Net</span>
+                <h3 className="text-xl font-black mt-1 mb-2">The Blocked Account (Sperrkonto)</h3>
+                <p className="text-xs text-slate-300 mb-6 leading-relaxed">
+                  German embassies mandate a Blocked Account of approx. €11,904/year (€992/month). Every month, €992 is deposited directly into your German checking account.
+                </p>
+
+                <div className="space-y-3 text-xs sm:text-sm">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                    <span className="text-slate-300">Monthly Payout from Account:</span>
+                    <span className="font-bold text-amber-400">€992 / month</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                    <span className="text-slate-300">Actual Average Expenses:</span>
+                    <span className="font-bold text-emerald-400">€750 – €880 / month</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                    <span className="text-emerald-300 font-semibold">+ Mini-Job (10h/wk):</span>
+                    <span className="font-bold text-emerald-400">+ €538 / month</span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-slate-400 mt-4 leading-relaxed">
+                  💡 <strong>Net Result:</strong> With a simple 10 hr/week mini-job, students cover 100% of their living expenses, leaving their blocked account money intact!
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-slate-800">
+                <button
+                  onClick={() => navigateTo('#applications?tab=Study Abroad')}
+                  className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs sm:text-sm cursor-pointer shadow-md"
+                >
+                  Start German University & Visa Application →
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= 10. GUARANTEED BENEFITS & 1-YEAR EXPERIENCE CERTIFICATE ================= */}
         <section id="salary-terms" className="scroll-mt-28 border-t border-slate-200 pt-14">
           <div className="grid lg:grid-cols-12 gap-8 items-stretch">
             

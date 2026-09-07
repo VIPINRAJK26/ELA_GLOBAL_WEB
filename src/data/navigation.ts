@@ -25,6 +25,8 @@ export const navItems: NavItem[] = [
       { label: 'German Project Pathway', href: '#work-while-you-study-page#growth', description: 'Onboarding to 1-year contracts' },
       { label: 'Domain Roles', href: '#work-while-you-study-page#roles', description: 'Operations, IT, Trade & Infra' },
       { label: 'Scholarship & Salary', href: '#work-while-you-study-page#apply', description: 'Fee subsidies & paid structure' },
+      { label: 'Part Time and Mini Jobs', href: '#work-while-you-study-page#part-time-and-mini-jobs', description: '20 hrs/week student jobs & €538 minijobs' },
+      { label: 'Student Cost of Living', href: '#work-while-you-study-page#student-cost-of-living', description: 'Monthly budget, rent & city-wise costs' },
     ],
   },
   {
